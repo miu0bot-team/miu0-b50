@@ -7,4 +7,4 @@
 
 效果：
 
-![](.\b50.PNG)
+![](https://img2.imgtp.com/2024/02/02/H74gtGMN.PNG)
