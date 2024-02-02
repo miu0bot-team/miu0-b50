@@ -8,9 +8,8 @@ import os
 from .maimai_api import _get_b50_json, _get_musicdata, get_cover
 from .maimai_models import ChartInfo, ChartFilter_b40, BestList, UserInfo
 
-from ..config import plugin_config
-
-userConfigPath = plugin_config.plugin_dir + '/static/user_info.json'
+plugin_dir:str = os.path.dirname(__file__)
+userConfigPath = os.path.dirname(__file__) + '/static/user_info.json'
 
 class DrawBest:
     def __init__(self, sdBest:BestList, dxBest:BestList, name:str, username:str, b50:bool=True):
@@ -28,9 +27,9 @@ class DrawBest:
             self.dxRating += dx.ra
         self.playerRating = self.sdRating + self.dxRating
         self.userinfo.add_rating(self.playerRating)
-        self.pic_dir = plugin_config.plugin_dir+'/static/mai/pic/'
-        self.cover_dir = plugin_config.plugin_dir+'/static/mai/cover/'
-        self.frame_dir = plugin_config.plugin_dir+'/static/mai/frame/'
+        self.pic_dir = plugin_dir+'/static/mai/pic/'
+        self.cover_dir = plugin_dir+'/static/mai/cover/'
+        self.frame_dir = plugin_dir+'/static/mai/frame/'
         self.b50_img = Image.open(self.pic_dir+"b50_bg.png").convert("RGBA") # size=(2200, 2400)
         
         self.frame_img = Image.open(self.frame_dir+f"UI_Frame_{self.userinfo.frame_id}.png").convert("RGBA")  # size=(1080, 452)
@@ -77,7 +76,7 @@ class DrawBest:
         rankPic = 'D C B BB BBB A AA AAA S Sp SS SSp SSS SSSp'.split(' ')
         comboPic = ' FC FCp AP APp'.split(' ')
         syncPic = ' FS FSp FSD FSDp'.split(' ')
-        titleFontName = plugin_config.plugin_dir+'/static/font/adobe_simhei.otf'
+        titleFontName = plugin_dir+'/static/font/adobe_simhei.otf'
         Color = [(69, 193, 36), (255, 186, 1), (255, 90, 102), (134, 49, 200), (217, 197, 233)]
         levelTriagle = [(0, 0), (97, 0), (0, 60)]
 
@@ -242,7 +241,7 @@ class DrawBest:
         namePlateImg = Image.open(self.pic_dir + 'Name.png').convert('RGBA')
         namePlateImg = namePlateImg.resize((285, 60))
         namePlateDraw = ImageDraw.Draw(namePlateImg)
-        FontName = plugin_config.plugin_dir+'/static/font/msyh.ttc'
+        FontName = plugin_dir+'/static/font/msyh.ttc'
         font = ImageFont.truetype(FontName, 36, encoding='utf-8')
         # logger.debug(self.name)
         namePlateDraw.text((12, 5), self.username, 'black', font)
@@ -250,7 +249,7 @@ class DrawBest:
 
         shougouImg = Image.open(self.pic_dir + 'UI_CMN_Shougou_Rainbow.png').convert('RGBA')
         shougouDraw = ImageDraw.Draw(shougouImg)
-        font2 = ImageFont.truetype(plugin_config.plugin_dir+'/static/font/adobe_simhei.otf', 14, encoding='utf-8')
+        font2 = ImageFont.truetype(plugin_dir+'/static/font/adobe_simhei.otf', 14, encoding='utf-8')
         if self.b50:
             playCountInfo = f"SD:{sdRating} + DX:{dxRating} = {playerRating}"
         else:
